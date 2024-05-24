@@ -7,11 +7,11 @@ const conversationSchema = new mongoose.Schema({
             ref: "User"
         }
     ],
-    messages:{
+    messages:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Message",
         default:[]
-    }
+    }]
 },{timestamps: true})
 
 const Conversation = mongoose.model("Conversation", conversationSchema)
