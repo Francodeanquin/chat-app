@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
-import MessageSkeleton from "../skeletons/MesageSkeleton";
+import MessageSkeleton from "../skeletons/MesageSkeleton"; 
 import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessages";
 
@@ -15,12 +15,14 @@ const Messages = () => {
     }
   }, [messages]);
 
+  if (!Array.isArray(messages)) {
+    console.error("Messages state is not an array", messages);
+    return null; // or render some error message
+  }
+
   return (
     <div className="px-4 flex-1 overflow-auto">
-
-      {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
-      {!loading &&
-        messages.length > 0 &&
+      {!loading && messages.length > 0 &&
         messages.map((message, index) => (
           <div
             key={message._id}
@@ -29,6 +31,8 @@ const Messages = () => {
             <Message message={message} />
           </div>
         ))}
+
+      {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
       {!loading && messages.length === 0 && (
         <p className="text-center">Send a message to start the conversation</p>
       )}
@@ -37,6 +41,8 @@ const Messages = () => {
 };
 
 export default Messages;
+
+
 
 // STARTER CODE SNIPPET
 // import Message from "./Message";
